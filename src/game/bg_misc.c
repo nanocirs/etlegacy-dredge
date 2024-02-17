@@ -241,6 +241,9 @@ qboolean Dredge_ParseWeaponFile(const char* weaponFile)
 	int spreadScale = -1;
 	int splashDamage = -1;
 	int splashRadius = -1;
+    int maxHeat = -1;
+    int coolRate = -1;
+    int heatRecoveryTime = -1;
 
 	handle = trap_PC_LoadSource(weaponFile);
 
@@ -306,6 +309,27 @@ qboolean Dredge_ParseWeaponFile(const char* weaponFile)
 				return qfalse;
 			}
 		}
+        else if (!Q_stricmp(token.string, "maxHeat"))
+		{
+			if (!PC_Int_Parse(handle, &maxHeat))
+			{
+				return qfalse;
+			}
+		}
+        else if (!Q_stricmp(token.string, "coolRate"))
+		{
+			if (!PC_Int_Parse(handle, &coolRate))
+			{
+				return qfalse;
+			}
+		}
+        else if (!Q_stricmp(token.string, "heatRecoveryTime"))
+		{
+			if (!PC_Int_Parse(handle, &heatRecoveryTime))
+			{
+				return qfalse;
+			}
+		}
 		else
 		{
 			return qfalse;
@@ -321,6 +345,9 @@ qboolean Dredge_ParseWeaponFile(const char* weaponFile)
 	weaponTable[weaponIndex].spreadScale = (spreadScale != -1) ? spreadScale : weaponTable[weaponIndex].spreadScale;
 	weaponTable[weaponIndex].splashDamage = (splashDamage != -1) ? splashDamage : weaponTable[weaponIndex].splashDamage;
 	weaponTable[weaponIndex].splashRadius = (splashRadius != -1) ? splashRadius : weaponTable[weaponIndex].splashRadius;
+	weaponTable[weaponIndex].maxHeat = (maxHeat != -1) ? maxHeat : weaponTable[weaponIndex].maxHeat;
+	weaponTable[weaponIndex].coolRate = (coolRate != -1) ? coolRate : weaponTable[weaponIndex].coolRate;
+	weaponTable[weaponIndex].heatRecoveryTime = (heatRecoveryTime != -1) ? heatRecoveryTime : weaponTable[weaponIndex].heatRecoveryTime;
 
 	return qtrue;
 

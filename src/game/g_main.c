@@ -2349,6 +2349,8 @@ static ID_INLINE void G_SetupExtensions(void)
  */
 void G_InitGame(int levelTime, int randomSeed, int restart, int etLegacyServer, int serverVersion)
 {
+	Dredge_ReadWeaponFiles();
+
 	int    i;
 	char   cs[MAX_INFO_STRING];
 	time_t aclock;

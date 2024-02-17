@@ -40,6 +40,8 @@
 #include "bg_public.h"
 #include "g_public.h"
 
+extern qboolean Dredge_ReadWeaponFiles();
+
 //==================================================================
 
 #define BODY_QUEUE_SIZE     8

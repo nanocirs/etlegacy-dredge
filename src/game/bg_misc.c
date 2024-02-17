@@ -222,6 +222,110 @@ weaponTable_t weaponTable[WP_NUM_WEAPONS] =
 	{ WP_AIRSTRIKE,            ITEM_WEAPON_AIRSTRIKE,             TEAM_FREE,   SK_SIGNALS,                                  WP_NONE,                WP_NONE,                 WP_NONE,  WP_AIRSTRIKE,         WP_AIRSTRIKE,         400,   0,     0,          400,         400,         WEAPON_TYPE_NONE,                          WEAPON_FIRING_MODE_NONE,                                     WEAPON_ATTRIBUT_CHARGE_TIME | WEAPON_ATTRIBUT_SHAKE,                                                                                                         0,      0,     "",                    WS_AIRSTRIKE,       qfalse, qfalse, 1,      0,   1,      0,         50,            1000,        0,          0,                0,      0,       0,               250,            250,             0,                0,              0,        { 14, 6, -4 },    0,                 { 0, 0 },       { 0, 0 },      "air strike",      "airstrike",             SK_FIELDOPS_FIRE_SUPPORT_STAMINA, {1, .66f},      MOD_AIRSTRIKE,            MOD_AIRSTRIKE            },  // WP_AIRSTRIKE             // 55   // airstrike shell bomb
 };
 
+qboolean Dredge_ReadWeaponFiles()
+{
+	for (int i = 0; i < WP_NUM_WEAPONS; i++)
+	{
+		Dredge_ParseWeaponFile(va("weaponsettings/%s.vik", weaponTable[i].weapFile));
+	}
+
+}
+
+qboolean Dredge_ParseWeaponFile(const char* weaponFile)
+{
+	pc_token_t token;
+	int        handle;
+
+	int damage = -1;
+	int spread = -1;
+	int spreadScale = -1;
+	int splashDamage = -1;
+	int splashRadius = -1;
+
+	handle = trap_PC_LoadSource(weaponFile);
+
+	if (!handle)
+	{
+		return qfalse;
+	}
+
+	if (!trap_PC_ReadToken(handle, &token) || Q_stricmp(token.string, "weaponSettings"))
+	{
+		return qfalse;
+	}
+
+	if (!trap_PC_ReadToken(handle, &token) || Q_stricmp(token.string, "{"))
+	{
+		return qfalse;
+	}
+
+	while (1)
+	{
+		if (!trap_PC_ReadToken(handle, &token))
+		{
+			break;
+		}
+
+		if (token.string[0] == '}')
+		{
+			break;
+		}
+
+		if (!Q_stricmp(token.string, "damage"))
+		{
+			if (!PC_Int_Parse(handle, &damage))
+			{
+				return qfalse;
+			}
+		}
+		else if (!Q_stricmp(token.string, "spread"))
+		{
+			if (!PC_Int_Parse(handle, &spread))
+			{
+				return qfalse;
+			}
+		}
+		else if (!Q_stricmp(token.string, "spreadScale"))
+		{
+			if (!PC_Int_Parse(handle, &spreadScale))
+			{
+				return qfalse;
+			}
+		}
+		else if (!Q_stricmp(token.string, "splashDamage"))
+		{
+			if (!PC_Int_Parse(handle, &splashDamage))
+			{
+				return qfalse;
+			}
+		}
+		else if (!Q_stricmp(token.string, "splashRadius"))
+		{
+			if (!PC_Int_Parse(handle, &splashRadius))
+			{
+				return qfalse;
+			}
+		}
+		else
+		{
+			return qfalse;
+		}
+	}
+
+	trap_PC_FreeSource(handle);
+
+	int weaponIndex = 3;
+
+	weaponTable[weaponIndex].damage = (damage != -1) ? damage : weaponTable[weaponIndex].damage;
+	weaponTable[weaponIndex].spread = (spread != -1) ? spread : weaponTable[weaponIndex].spread;
+	weaponTable[weaponIndex].spreadScale = (spreadScale != -1) ? spreadScale : weaponTable[weaponIndex].spreadScale;
+	weaponTable[weaponIndex].splashDamage = (splashDamage != -1) ? splashDamage : weaponTable[weaponIndex].splashDamage;
+	weaponTable[weaponIndex].splashRadius = (splashRadius != -1) ? splashRadius : weaponTable[weaponIndex].splashRadius;
+
+	return qtrue;
+
+}
+
 /**
  * @var modTable
  * @brief New weapon table for mod properties:

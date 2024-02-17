@@ -226,12 +226,12 @@ qboolean Dredge_ReadWeaponFiles()
 {
 	for (int i = 0; i < WP_NUM_WEAPONS; i++)
 	{
-		Dredge_ParseWeaponFile(va("weaponsettings/%s.vik", weaponTable[i].weapFile));
+		Dredge_ParseWeaponFile(va("weaponsettings/%s.vik", weaponTable[i].weapFile), i);
 	}
 
 }
 
-qboolean Dredge_ParseWeaponFile(const char* weaponFile)
+qboolean Dredge_ParseWeaponFile(const char* weaponFile, int weaponIndex)
 {
 	pc_token_t token;
 	int        handle;
@@ -337,8 +337,6 @@ qboolean Dredge_ParseWeaponFile(const char* weaponFile)
 	}
 
 	trap_PC_FreeSource(handle);
-
-	int weaponIndex = 3;
 
 	weaponTable[weaponIndex].damage = (damage != -1) ? damage : weaponTable[weaponIndex].damage;
 	weaponTable[weaponIndex].spread = (spread != -1) ? spread : weaponTable[weaponIndex].spread;

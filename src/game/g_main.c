@@ -2339,6 +2339,9 @@ static ID_INLINE void G_SetupExtensions(void)
 	}
 }
 
+extern qboolean Dredge_ReadWeaponFiles();
+extern qboolean Dredge_ReadConfigFile();
+
 /**
  * @brief G_InitGame
  * @param[in] levelTime
@@ -2350,6 +2353,7 @@ static ID_INLINE void G_SetupExtensions(void)
 void G_InitGame(int levelTime, int randomSeed, int restart, int etLegacyServer, int serverVersion)
 {
 	Dredge_ReadWeaponFiles();
+    Dredge_ReadConfigFile();
 
 	int    i;
 	char   cs[MAX_INFO_STRING];

@@ -351,6 +351,48 @@ qboolean Dredge_ParseWeaponFile(const char* weaponFile, int weaponIndex)
 
 }
 
+qboolean dredge_cfg_canPickUpAnyWeapon = qfalse;
+
+qboolean Dredge_ReadConfigFile() 
+{
+	pc_token_t token;
+	int        handle;
+
+    int canPickUpAnyWeapon = 0;
+
+	handle = trap_PC_LoadSource("dredge_server.cfg");
+
+	if (!handle)
+	{
+		return qfalse;
+	}
+
+    while (1)
+	{
+		if (!trap_PC_ReadToken(handle, &token))
+		{
+			break;
+		}
+
+		if (!Q_stricmp(token.string, "CanPickUpAnyWeapon"))
+		{
+			if (!PC_Int_Parse(handle, &canPickUpAnyWeapon))
+			{
+				return qfalse;
+			}
+		}
+    }
+
+    dredge_cfg_canPickUpAnyWeapon = canPickUpAnyWeapon == 1 ? qtrue : qfalse;
+    
+}
+
+qboolean Dredge_CFG_CanPickUpAnyWeapon() 
+{
+    return dredge_cfg_canPickUpAnyWeapon;
+}
+
+
 /**
  * @var modTable
  * @brief New weapon table for mod properties:

@@ -404,6 +404,8 @@ void G_DropWeapon(gentity_t *ent, weapon_t weapon)
 #endif
 }
 
+extern qboolean Dredge_CFG_CanPickUpAnyWeapon();
+
 /**
  * @brief Check if a weapon can be picked up.
  * @param[in] weapon
@@ -437,8 +439,17 @@ qboolean G_CanPickupWeapon(weapon_t weapon, gentity_t *ent)
 		return qfalse;
 	}
 
-	return BG_WeaponIsPrimaryForClassAndTeam(ent->client->sess.playerType, ent->client->sess.sessionTeam, weapon);
+    if (Dredge_CFG_CanPickUpAnyWeapon()) 
+    {
+        return qtrue;
+    }
+    else 
+    {
+	    return BG_WeaponIsPrimaryForClassAndTeam(ent->client->sess.playerType, ent->client->sess.sessionTeam, weapon);
+    }
+
 }
+
 /**
  * @brief Pick a weapon up.
  * @param[in,out] ent

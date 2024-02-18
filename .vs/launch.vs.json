@@ -8,10 +8,10 @@
       "projectTarget": "etl.exe",
       "name": "etl.exe",
       "args": [
-        "+set",
+        "\u002Bset",
         "developer",
         "1",
-        "+set",
+        "\u002Bset",
         "omnibot_path",
         "./legacy/omni-bot"
       ]

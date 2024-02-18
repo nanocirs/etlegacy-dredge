@@ -224,7 +224,9 @@ weaponTable_t weaponTable[WP_NUM_WEAPONS] =
 
 qboolean Dredge_ReadWeaponFiles()
 {
-	for (int i = 0; i < WP_NUM_WEAPONS; i++)
+    int i;
+
+	for (i = 0; i < WP_NUM_WEAPONS; i++)
 	{
 		Dredge_ParseWeaponFile(va("weaponsettings/%s.vik", weaponTable[i].weapFile), i);
 	}

@@ -2976,6 +2976,7 @@ extern weaponTable_t weaponTable[WP_NUM_WEAPONS];
 
 qboolean Dredge_ReadWeaponFiles();
 qboolean Dredge_ReadConfigFile();
+qboolean Dredge_ParseWeaponFile(const char* weaponFile, int weaponIndex);
 qboolean Dredge_CFG_CanPickUpAnyWeapon();
 
 // Lookup table to find mod properties

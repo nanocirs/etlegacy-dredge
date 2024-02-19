@@ -2527,7 +2527,7 @@ typedef enum
 #define MAX_GIB_MODELS      16
 
 #define MAX_WEAPS_PER_CLASS 8   ///< was 10
-
+#define DREDGE_MAX_PRIMARY_WEAPS 16
 
 /**
  * @struct bg_weaponclass_t
@@ -2977,7 +2977,8 @@ extern weaponTable_t weaponTable[WP_NUM_WEAPONS];
 qboolean Dredge_ReadWeaponFiles();
 qboolean Dredge_ReadConfigFile();
 qboolean Dredge_ParseWeaponFile(const char* weaponFile, int weaponIndex);
-qboolean Dredge_CFG_CanPickUpAnyWeapon();
+qboolean Dredge_CFG_PickUpAnyWeapon();
+qboolean Dredge_CFG_CarryMultiplePrimaryWeapons();
 
 // Lookup table to find mod properties
 extern modTable_t modTable[MOD_NUM_MODS];

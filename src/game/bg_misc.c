@@ -353,14 +353,16 @@ qboolean Dredge_ParseWeaponFile(const char* weaponFile, int weaponIndex)
 
 }
 
-qboolean dredge_cfg_canPickUpAnyWeapon = qfalse;
+qboolean dredge_cfg_pickUpAnyWeapon = qfalse;
+qboolean dredge_cfg_carryMultiplePrimaryWeapons = qfalse;
 
 qboolean Dredge_ReadConfigFile() 
 {
 	pc_token_t token;
 	int        handle;
 
-    int canPickUpAnyWeapon = 0;
+    int pickUpAnyWeapon = -1;
+    int carryMultiplePrimaryWeapons = -1;
 
 	handle = trap_PC_LoadSource("dredge_server.cfg");
 
@@ -376,22 +378,35 @@ qboolean Dredge_ReadConfigFile()
 			break;
 		}
 
-		if (!Q_stricmp(token.string, "CanPickUpAnyWeapon"))
+		if (!Q_stricmp(token.string, "PickUpAnyWeapon"))
 		{
-			if (!PC_Int_Parse(handle, &canPickUpAnyWeapon))
+			if (!PC_Int_Parse(handle, &pickUpAnyWeapon))
+			{
+				return qfalse;
+			}
+		}
+        else if (!Q_stricmp(token.string, "CarryMultiplePrimaryWeapons"))
+		{
+			if (!PC_Int_Parse(handle, &carryMultiplePrimaryWeapons))
 			{
 				return qfalse;
 			}
 		}
     }
 
-    dredge_cfg_canPickUpAnyWeapon = canPickUpAnyWeapon == 1 ? qtrue : qfalse;
-    
+    dredge_cfg_pickUpAnyWeapon = pickUpAnyWeapon == 1 ? qtrue : qfalse;
+    dredge_cfg_carryMultiplePrimaryWeapons = carryMultiplePrimaryWeapons == 1 ? qtrue : qfalse;
+
 }
 
-qboolean Dredge_CFG_CanPickUpAnyWeapon() 
+qboolean Dredge_CFG_PickUpAnyWeapon() 
 {
-    return dredge_cfg_canPickUpAnyWeapon;
+    return dredge_cfg_pickUpAnyWeapon;
+}
+
+qboolean Dredge_CFG_CarryMultiplePrimaryWeapons() 
+{
+    return dredge_cfg_carryMultiplePrimaryWeapons;
 }
 
 

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Wolfenstein: Enemy Territory GPL Source Code
  * Copyright (C) 1999-2010 id Software LLC, a ZeniMax Media company.
  *
@@ -184,6 +184,27 @@ weapon_t G_GetPrimaryWeaponForClient(gclient_t *client)
 {
 	int i, team;
 
+    weapon_t dredge_allPrimaryWeapons[DREDGE_MAX_PRIMARY_WEAPS] = 
+    {
+        WP_MP40,        
+        WP_MOBILE_MG42, 
+        WP_FLAMETHROWER,
+        WP_PANZERFAUST, 
+        WP_MORTAR2,     
+        WP_KAR98,
+        WP_MP34,
+        WP_FG42,
+        WP_K43, 
+        WP_THOMPSON,       
+        WP_MOBILE_BROWNING,
+        WP_BAZOOKA,        
+        WP_MORTAR,         
+        WP_CARBINE,
+        WP_STEN,  
+        WP_GARAND,
+
+    };
+
 	if (client->sess.sessionTeam != TEAM_ALLIES && client->sess.sessionTeam != TEAM_AXIS)
 	{
 		return WP_NONE;
@@ -193,13 +214,26 @@ weapon_t G_GetPrimaryWeaponForClient(gclient_t *client)
 	{
 		bg_playerclass_t *classInfo = GetPlayerClassesData(team, client->sess.playerType);
 
-		for (i = 0; i < MAX_WEAPS_PER_CLASS; i++)
-		{
-			if (COM_BitCheck(client->ps.weapons, classInfo->classPrimaryWeapons[i].weapon))
+        if (Dredge_CFG_CarryMultiplePrimaryWeapons()) 
+        {
+			for (i = 0; i < MAX_WEAPS_PER_CLASS; i++)
 			{
-				return classInfo->classPrimaryWeapons[i].weapon;
+				if (COM_BitCheck(client->ps.weapons, classInfo->classPrimaryWeapons[i].weapon))
+				{
+					return classInfo->classPrimaryWeapons[i].weapon;
+				}
 			}
-		}
+        }
+        else
+        {
+			for (i = 0; i < DREDGE_MAX_PRIMARY_WEAPS; i++)
+			{
+				if (COM_BitCheck(client->ps.weapons, dredge_allPrimaryWeapons[i]))
+				{
+					return dredge_allPrimaryWeapons[i];
+				}
+			}
+        }
 	}
 
 	return WP_NONE;
@@ -404,7 +438,8 @@ void G_DropWeapon(gentity_t *ent, weapon_t weapon)
 #endif
 }
 
-extern qboolean Dredge_CFG_CanPickUpAnyWeapon();
+extern qboolean Dredge_CFG_PickUpAnyWeapon();
+extern qboolean Dredge_CFG_CarryMultiplePrimaryWeapons();
 
 /**
  * @brief Check if a weapon can be picked up.
@@ -439,9 +474,15 @@ qboolean G_CanPickupWeapon(weapon_t weapon, gentity_t *ent)
 		return qfalse;
 	}
 
-    if (Dredge_CFG_CanPickUpAnyWeapon()) 
+    if (Dredge_CFG_PickUpAnyWeapon()) 
     {
+        if (!weapon) 
+        {
+            return qfalse;
+        }
+
         return qtrue;
+
     }
     else 
     {
@@ -541,8 +582,8 @@ int Pickup_Weapon(gentity_t *ent, gentity_t *other)
 			primaryWeapon = G_GetPrimaryWeaponForClient(other->client);
 		}
 
-		// drop our primary weapon if one exist
-		if (primaryWeapon)
+		// drop our primary weapon if one exist and if we can't carry multiple weapons.
+		if (primaryWeapon && !Dredge_CFG_CarryMultiplePrimaryWeapons())
 		{
 			G_DropWeapon(other, primaryWeapon);
 		}

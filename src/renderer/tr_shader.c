@@ -604,7 +604,7 @@ static void ParseTexMod(char *_text, shaderStage_t *stage)
 static qboolean ParseStage(shaderStage_t *stage, char **text)
 {
 	char     *token;
-	int      depthMaskBits     = GLS_DEPTHMASK_TRUE, blendSrcBits = 0, blendDstBits = 0, atestBits = 0, depthFuncBits = 0;
+	int      depthMaskBits = GLS_DEPTHMASK_TRUE, blendSrcBits = 0, blendDstBits = 0, atestBits = 0, depthFuncBits = 0;
 	qboolean depthMaskExplicit = qfalse;
 
 	stage->active = qtrue;

@@ -1354,7 +1354,7 @@ static void GLSL_PreprocessShaderText(char *shaderBuffer, char *filetext, GLenum
 }
 
 #define GLSL_BUFF 64000
-#define GLSL_BUFF_CHAR (sizeof(char) *GLSL_BUFF)
+#define GLSL_BUFF_CHAR (sizeof(char) * GLSL_BUFF)
 
 /**
  * @brief GLSL_BuildGPUShaderText

@@ -5059,7 +5059,7 @@ qboolean G_ScriptAction_Delete(gentity_t *ent, char *params)
 			break;
 
 		case F_VECTOR:
-            Q_sscanf(value, "%f %f %f", &valueVector[0], &valueVector[1], &valueVector[2]);
+			Q_sscanf(value, "%f %f %f", &valueVector[0], &valueVector[1], &valueVector[2]);
 			while ((found = G_FindVector(found, fields[i].ofs, valueVector)) != NULL)
 			{
 				pass[found->s.number]++;

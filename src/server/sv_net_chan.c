@@ -107,9 +107,9 @@ static void SV_Netchan_Decode(client_t *client, msg_t *msg)
 	int      serverId, messageAcknowledge, reliableAcknowledge;
 	int      i;
 	int      index = 0;
-	int      srdc = msg->readcount;
-	int      sbit = msg->bit;
-	qboolean soob = msg->oob;
+	int      srdc  = msg->readcount;
+	int      sbit  = msg->bit;
+	qboolean soob  = msg->oob;
 	byte     key, *string;
 
 	msg->oob = qfalse;

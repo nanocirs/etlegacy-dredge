@@ -76,7 +76,7 @@ static int c_begins;
  * @param[in] numIndexes
  * @param[in] indexes
  */
-static void R_DrawStripElements(int numIndexes, const glIndex_t *indexes, void(GLAPIENTRY * element)(GLint))
+static void R_DrawStripElements(int numIndexes, const glIndex_t *indexes, void(GLAPIENTRY *element)(GLint))
 {
 	int      i;
 	int      last[3] = { -1, -1, -1 };

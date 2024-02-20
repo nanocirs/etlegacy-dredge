@@ -715,7 +715,7 @@ static void LoadRGBEToBytes(const char *name, byte **ldrImage, int *width, int *
 	{
 		for (j = 0; j < 3; j++)
 		{
-			sample[j] = *floatbuf++ *255.0f;
+			sample[j] = *floatbuf++ * 255.0f;
 		}
 
 		// clamp with color normalization
@@ -4226,7 +4226,7 @@ static void R_LoadNodesAndLeafs(lump_t *nodeLump, lump_t *leafLump)
 	dleaf_t       *inLeaf;
 	bspNode_t     *out;
 	int           numNodes, numLeafs;
-	srfVert_t     *verts = NULL;
+	srfVert_t     *verts     = NULL;
 	srfTriangle_t *triangles = NULL;
 	IBO_t         *volumeIBO = NULL;
 	vec3_t        mins, maxs;
@@ -5361,7 +5361,7 @@ void R_LoadLights(char *lightDefs)
 				mat4_t rotation;
 
 				Q_sscanf(value, "%f %f %f %f %f %f %f %f %f", &rotation[0], &rotation[1], &rotation[2],
-				       &rotation[4], &rotation[5], &rotation[6], &rotation[8], &rotation[9], &rotation[10]);
+				         &rotation[4], &rotation[5], &rotation[6], &rotation[8], &rotation[9], &rotation[10]);
 
 				quat_from_mat4(light->l.rotation, rotation);
 			}
@@ -5567,7 +5567,7 @@ void R_LoadEntities(lump_t *l)
 
 
 			Q_sscanf(value, "%f %f %f", &tr.worldEntity.ambientLight[0], &tr.worldEntity.ambientLight[1],
-			       &tr.worldEntity.ambientLight[2]);
+			         &tr.worldEntity.ambientLight[2]);
 
 		}
 		// check for ambient scale constant

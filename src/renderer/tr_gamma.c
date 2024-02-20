@@ -35,7 +35,8 @@
 
 #include "tr_local.h"
 
-typedef struct gammaProgram_s {
+typedef struct gammaProgram_s
+{
 	shaderProgram_t *program;
 
 	GLint gammaUniform;
@@ -45,22 +46,22 @@ typedef struct gammaProgram_s {
 	GLint currentMapUniform;
 } gammaProgram_t;
 
-image_t *screenImage = NULL;
+image_t        *screenImage = NULL;
 gammaProgram_t gammaProgram;
 
 const char *simpleGammaVert = "#version 110\n"
-							  "void main(void) {\n"
-							  "gl_Position = gl_Vertex;\n"
-							  "gl_TexCoord[0] = gl_MultiTexCoord0;\n"
-							  "}\n";
+                              "void main(void) {\n"
+                              "gl_Position = gl_Vertex;\n"
+                              "gl_TexCoord[0] = gl_MultiTexCoord0;\n"
+                              "}\n";
 
 const char *simpleGammaFrag = "#version 110\n"
-							  "uniform sampler2D u_CurrentMap;\n"
-							  "uniform float u_gamma;\n"
-							  "uniform float u_overBrightBits;\n"
-							  "void main(void) {\n"
-							  "gl_FragColor = vec4(pow(texture2D(u_CurrentMap, vec2(gl_TexCoord[0])).rgb, vec3(1.0 / u_gamma)) * u_overBrightBits, 1.0);\n"
-							  "}\n";
+                              "uniform sampler2D u_CurrentMap;\n"
+                              "uniform float u_gamma;\n"
+                              "uniform float u_overBrightBits;\n"
+                              "void main(void) {\n"
+                              "gl_FragColor = vec4(pow(texture2D(u_CurrentMap, vec2(gl_TexCoord[0])).rgb, vec3(1.0 / u_gamma)) * u_overBrightBits, 1.0);\n"
+                              "}\n";
 
 /**
  * @brief R_BuildGammaProgram
@@ -70,8 +71,8 @@ static void R_BuildGammaProgram(void)
 	gammaProgram.program = R_CreateShaderProgram(simpleGammaVert, simpleGammaFrag);
 
 	R_UseShaderProgram(gammaProgram.program);
-	gammaProgram.currentMapUniform = R_GetShaderProgramUniform(gammaProgram.program, "u_CurrentMap");
-	gammaProgram.gammaUniform = R_GetShaderProgramUniform(gammaProgram.program, "u_gamma");
+	gammaProgram.currentMapUniform     = R_GetShaderProgramUniform(gammaProgram.program, "u_CurrentMap");
+	gammaProgram.gammaUniform          = R_GetShaderProgramUniform(gammaProgram.program, "u_gamma");
 	gammaProgram.overBrightBitsUniform = R_GetShaderProgramUniform(gammaProgram.program, "u_overBrightBits");
 	R_UseShaderProgram(NULL);
 }
@@ -156,7 +157,7 @@ void R_InitGamma(void)
 	}
 
 	screenImage = R_CreateImage("screenBufferImage_skies", NULL, glConfig.vidWidth, glConfig.vidHeight, qfalse, qfalse,
-								GL_CLAMP_TO_EDGE);
+	                            GL_CLAMP_TO_EDGE);
 
 	if (!screenImage)
 	{

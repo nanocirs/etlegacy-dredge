@@ -13,7 +13,7 @@
 
 #if !defined(lua_pushliteral)
 #define lua_pushliteral(L, s) \
-	lua_pushstring(L, "" s, (sizeof(s) / sizeof(char)) - 1)
+		lua_pushstring(L, "" s, (sizeof(s) / sizeof(char)) - 1)
 #endif
 
 

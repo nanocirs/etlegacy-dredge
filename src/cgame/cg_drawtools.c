@@ -88,7 +88,7 @@ qboolean Ccg_Is43Screen(void)
  */
 float Ccg_WideX(float x)
 {
-	return (Ccg_Is43Screen()) ? x : x *cgs.adr43;  // * (aspectratio / (4/3))
+	return (Ccg_Is43Screen()) ? x : x * cgs.adr43;  // * (aspectratio / (4/3))
 }
 
 /**

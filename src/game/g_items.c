@@ -184,26 +184,26 @@ weapon_t G_GetPrimaryWeaponForClient(gclient_t *client)
 {
 	int i, team;
 
-    weapon_t dredge_allPrimaryWeapons[DREDGE_MAX_PRIMARY_WEAPS] = 
-    {
-        WP_MP40,        
-        WP_MOBILE_MG42, 
-        WP_FLAMETHROWER,
-        WP_PANZERFAUST, 
-        WP_MORTAR2,     
-        WP_KAR98,
-        WP_MP34,
-        WP_FG42,
-        WP_K43, 
-        WP_THOMPSON,       
-        WP_MOBILE_BROWNING,
-        WP_BAZOOKA,        
-        WP_MORTAR,         
-        WP_CARBINE,
-        WP_STEN,  
-        WP_GARAND,
+	weapon_t dredge_allPrimaryWeapons[DREDGE_MAX_PRIMARY_WEAPS] =
+	{
+		WP_MP40,
+		WP_MOBILE_MG42,
+		WP_FLAMETHROWER,
+		WP_PANZERFAUST,
+		WP_MORTAR2,
+		WP_KAR98,
+		WP_MP34,
+		WP_FG42,
+		WP_K43,
+		WP_THOMPSON,
+		WP_MOBILE_BROWNING,
+		WP_BAZOOKA,
+		WP_MORTAR,
+		WP_CARBINE,
+		WP_STEN,
+		WP_GARAND,
 
-    };
+	};
 
 	if (client->sess.sessionTeam != TEAM_ALLIES && client->sess.sessionTeam != TEAM_AXIS)
 	{
@@ -214,8 +214,8 @@ weapon_t G_GetPrimaryWeaponForClient(gclient_t *client)
 	{
 		bg_playerclass_t *classInfo = GetPlayerClassesData(team, client->sess.playerType);
 
-        if (Dredge_CFG_CarryMultiplePrimaryWeapons()) 
-        {
+		if (Dredge_CFG_CarryMultiplePrimaryWeapons())
+		{
 			for (i = 0; i < MAX_WEAPS_PER_CLASS; i++)
 			{
 				if (COM_BitCheck(client->ps.weapons, classInfo->classPrimaryWeapons[i].weapon))
@@ -223,9 +223,9 @@ weapon_t G_GetPrimaryWeaponForClient(gclient_t *client)
 					return classInfo->classPrimaryWeapons[i].weapon;
 				}
 			}
-        }
-        else
-        {
+		}
+		else
+		{
 			for (i = 0; i < DREDGE_MAX_PRIMARY_WEAPS; i++)
 			{
 				if (COM_BitCheck(client->ps.weapons, dredge_allPrimaryWeapons[i]))
@@ -233,7 +233,7 @@ weapon_t G_GetPrimaryWeaponForClient(gclient_t *client)
 					return dredge_allPrimaryWeapons[i];
 				}
 			}
-        }
+		}
 	}
 
 	return WP_NONE;
@@ -474,20 +474,20 @@ qboolean G_CanPickupWeapon(weapon_t weapon, gentity_t *ent)
 		return qfalse;
 	}
 
-    if (Dredge_CFG_PickUpAnyWeapon()) 
-    {
-        if (!weapon) 
-        {
-            return qfalse;
-        }
+	if (Dredge_CFG_PickUpAnyWeapon())
+	{
+		if (!weapon)
+		{
+			return qfalse;
+		}
 
-        return qtrue;
+		return qtrue;
 
-    }
-    else 
-    {
-	    return BG_WeaponIsPrimaryForClassAndTeam(ent->client->sess.playerType, ent->client->sess.sessionTeam, weapon);
-    }
+	}
+	else
+	{
+		return BG_WeaponIsPrimaryForClassAndTeam(ent->client->sess.playerType, ent->client->sess.sessionTeam, weapon);
+	}
 
 }
 

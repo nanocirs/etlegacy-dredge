@@ -2353,7 +2353,7 @@ extern qboolean Dredge_ReadConfigFile();
 void G_InitGame(int levelTime, int randomSeed, int restart, int etLegacyServer, int serverVersion)
 {
 	Dredge_ReadWeaponFiles();
-    Dredge_ReadConfigFile();
+	Dredge_ReadConfigFile();
 
 	int    i;
 	char   cs[MAX_INFO_STRING];
@@ -3835,8 +3835,8 @@ void QDECL G_LogPrintf(const char *fmt, ...)
 	else if (g_logTimestamp.integer == 2) // startup relative time (mmm:ss)
 	{
 		int timestamp = trap_Milliseconds();
-		int m = timestamp / 60000;
-		int s = (timestamp - m * 60000) / 1000;
+		int m         = timestamp / 60000;
+		int s         = (timestamp - m * 60000) / 1000;
 
 		if (m < 1000)
 		{
@@ -3850,8 +3850,8 @@ void QDECL G_LogPrintf(const char *fmt, ...)
 	}
 	else if (g_logTimestamp.integer == 3) // vanilla
 	{
-		time_t          aclock;
-		char            timeFt[32];
+		time_t aclock;
+		char   timeFt[32];
 
 		time(&aclock);
 		strftime(timeFt, sizeof(timeFt), "%H:%M.%S", localtime(&aclock));

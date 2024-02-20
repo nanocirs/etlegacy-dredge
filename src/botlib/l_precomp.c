@@ -1228,7 +1228,7 @@ int PC_Directive_define(source_t *source)
 	define->next    = source->defines;
 	source->defines = define;
 #endif //DEFINEHASHING
-	   // if nothing is defined, just return
+	// if nothing is defined, just return
 	if (!PC_ReadLine(source, &token))
 	{
 		return qtrue;
@@ -1355,7 +1355,7 @@ define_t *PC_DefineFromString(const char *string)
 #if DEFINEHASHING
 	src.definehash = GetClearedMemory(DEFINEHASHSIZE * sizeof(define_t *));
 #endif //DEFINEHASHING
-	   // create a define from the source
+	// create a define from the source
 	res = PC_Directive_define(&src);
 	// free any tokens if left
 	for (t = src.tokens; t; t = src.tokens)
@@ -1737,23 +1737,23 @@ int PC_OperatorPriority(int op)
 #define MAX_VALUES      64
 #define MAX_OPERATORS   64
 #define AllocValue(val)                                 \
-	if (numvalues >= MAX_VALUES) {                      \
-		SourceError(source, "out of value space\n");      \
-		error = 1;                                      \
-		break;                                          \
-	}                                                   \
-	else { \
-		val = &value_heap[numvalues++]; }
+		if (numvalues >= MAX_VALUES) {                      \
+			SourceError(source, "out of value space\n");      \
+			error = 1;                                      \
+			break;                                          \
+		}                                                   \
+		else { \
+			val = &value_heap[numvalues++]; }
 #define FreeValue(val)
 
 #define AllocOperator(op)                               \
-	if (numoperators >= MAX_OPERATORS) {                \
-		SourceError(source, "out of operator space\n");   \
-		error = 1;                                      \
-		break;                                          \
-	}                                                   \
-	else { \
-		op = &operator_heap[numoperators++]; }
+		if (numoperators >= MAX_OPERATORS) {                \
+			SourceError(source, "out of operator space\n");   \
+			error = 1;                                      \
+			break;                                          \
+		}                                                   \
+		else { \
+			op = &operator_heap[numoperators++]; }
 #define FreeOperator(op)
 
 /**
@@ -3463,7 +3463,7 @@ void FreeSource(source_t *source)
 		}
 	}
 #else //DEFINEHASHING
-	  //free all defines
+	//free all defines
 	while (source->defines)
 	{
 		define          = source->defines;
@@ -3471,7 +3471,7 @@ void FreeSource(source_t *source)
 		PC_FreeDefine(define);
 	}
 #endif //DEFINEHASHING
-	   // free all indents
+	// free all indents
 	while (source->indentstack)
 	{
 		indent              = source->indentstack;
@@ -3485,7 +3485,7 @@ void FreeSource(source_t *source)
 		FreeMemory(source->definehash);
 	}
 #endif //DEFINEHASHING
-	   // free the source itself
+	// free the source itself
 	FreeMemory(source);
 }
 
